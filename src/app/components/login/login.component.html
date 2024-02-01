@@ -1,0 +1,35 @@
+<div class="login-container">
+    <form action="" class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="logo-container">
+            <h1 class="logo">MAGENDA</h1>
+        </div>
+        <div class="form-container">
+            <p class="label">Entre na sua Conta</p>
+            <div class="input-container">
+                <input class="input email" type="text" placeholder="Email" name="email" formControlName="email"
+                    [ngClass]="{ 'error-input': loginForm.get('email')?.invalid && loginForm.get('email')?.touched }">
+                <div class="error"
+                    *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.errors?.['pattern'] && loginForm.get('email')?.touched">
+                    Campo de email inválido!
+                </div>
+
+                <div class="error"
+                    *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.errors?.['required'] && loginForm.get('email')?.touched">
+                    Campo de email precisa ser preenchido!
+                </div>
+            </div>
+
+            <div class="input-container">
+                <input class="input password" type="text" placeholder="Senha" name="password" formControlName="password"
+                    [ngClass]="{ 'error-input': loginForm.get('password')?.invalid && loginForm.get('password')?.touched }">
+
+                <div class=" error"
+                    *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.touched">
+                    Campo de senha precisa ser preenchido!
+                </div>
+            </div>
+            <a class="link" href="#">Esqueceu sua senha?</a>
+            <button class="btn" type="submit" [disabled]="!loginForm.valid">Entrar</button>
+        </div>
+    </form>
+</div>

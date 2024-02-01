@@ -1,0 +1,112 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10%;
+
+    .login-form {
+        width: 636px;
+        height: 636px;
+        box-shadow: -4px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        background-color: #E0E1DD;
+        border-radius: 5px;
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .logo {
+                margin-top: 47px;
+                font-size: 48px;
+                font-weight: 400;
+            }
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            margin: 0 62px 0 62px;
+
+            .label {
+                margin-top: 36px;
+                font-size: 24px;
+                font-weight: 200
+            }
+
+            .input-container {
+                width: 100%;
+                margin-bottom: 36px;
+            }
+
+            .input {
+                width: 100%;
+                border-radius: 10px;
+                border: 2px solid #1B263B;
+                background: #E0E1DD;
+                height: 60px;
+                flex-shrink: 0;
+                text-indent: 30px;
+            }
+
+            .error {
+                color: red;
+            }
+
+            .error-input {
+                border: 2px solid red;
+            }
+
+
+            .password {
+                margin-bottom: 10px;
+            }
+
+            .input::placeholder {
+                color: #778DA9;
+            }
+
+            .input:focus {
+                outline: none;
+                border-color: #778DA9;
+            }
+
+            .input:focus::placeholder {
+                color: #778DA9;
+            }
+
+            .link {
+                text-decoration: none;
+                font-size: 16px;
+                margin-bottom: 60px;
+            }
+
+            .link:hover {
+                color: #778DA9;
+                cursor: grab;
+            }
+
+            .btn {
+                width: 170px;
+                height: 60px;
+                flex-shrink: 0;
+                border-radius: 10px;
+                background: #415A77;
+                border: none;
+
+                color: #FFF;
+                font-size: 28px;
+            }
+
+            .btn:hover {
+                background: #778DA9;
+                cursor: pointer;
+            }
+
+            .btn:disabled {
+                background: #778DA9;
+                cursor: default;
+            }
+        }
+    }
+}

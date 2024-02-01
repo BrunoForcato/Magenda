@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+    background-color: #778DA9;
+    font-family: "Inria Serif";
+    color: #1B263B;
+    overflow: hidden;
+}
+
+input,
+button {
+    font-family: "Inria Serif";
+    color: #1B263B;
+}
+
+input {
+    text-indent: 30px;
+    font-size: 24px;
+}
+
+a {
+    color: #1B263B;
+    font-family: "Inria Serif";
+}
