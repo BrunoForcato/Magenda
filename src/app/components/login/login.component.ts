@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, ReactiveFormsModule, Validators } from '@angula
 import { LoginModel } from '../../models/loginModel';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -15,9 +17,10 @@ import { Router, RouterLink } from '@angular/router';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, private localStorageService: LocalStorageService) { }
 
   ngOnInit(): void {
+    this.isAuthenticated();
     this.createLoginForm();
   }
 
@@ -29,13 +32,20 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.loginForm.get('email')?.errors)
-
     var loginFormValue = this.loginForm.getRawValue() as LoginModel
-    console.log('Your form data : ', loginFormValue);
+    this.localStorageService.setItem('user', JSON.stringify(loginFormValue));
+
+    this.router.navigate(['home']);
   }
 
   forgotPassword() {
     this.router.navigate(['building'])
+  }
+
+  async isAuthenticated() {
+    const userString = await this.localStorageService.getItem('user');
+    if (userString !== null) {
+      this.router.navigate(['home']);
+    }
   }
 }
