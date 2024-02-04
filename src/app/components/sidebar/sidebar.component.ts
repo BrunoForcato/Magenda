@@ -1,15 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { HomeComponent } from '../home/home.component';
+import { ActiveRouteService } from '../../services/active-routes.service';
 
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, HomeComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
+
+  constructor(private activeRouteService: ActiveRouteService) { }
+
   routes = [
     {
       title: "Dashboard",
@@ -29,5 +34,8 @@ export class SidebarComponent {
         route.active = false;
       }
     })
+
+    console.log(routeName)
+    this.activeRouteService.setActiveRoute(routeName);
   }
 }
