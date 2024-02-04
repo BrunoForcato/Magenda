@@ -1,0 +1,10 @@
+.home-container {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    background-color: #E0E1DD;
+
+    .navbar {
+        width: 100%;
+    }
+}

@@ -1,0 +1,11 @@
+<div class="sidebar-container">
+    <div class="title-container">
+        MAGENDA
+    </div>
+    <div class="links-container">
+        <ul class="list">
+            <li *ngFor="let route of routes; index as i; first as isFirst" class="itens {{route.active? 'active' : ''}}"
+                (click)="toogleActiveRoute(route.title)"><a>{{route.title}}</a></li>
+        </ul>
+    </div>
+</div>
