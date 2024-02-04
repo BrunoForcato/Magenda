@@ -2,7 +2,8 @@
     <app-sidebar></app-sidebar>
     <div class="content-container">
         <app-navbar class="navbar"></app-navbar>
-        <app-dashboard></app-dashboard>
+        <app-dashboard *ngIf="this.routeActive === 'Dashboard'"></app-dashboard>
+        <app-calendar *ngIf="this.routeActive === 'Agenda'"></app-calendar>
     </div>
 </div>
 
