@@ -1,0 +1,66 @@
+.dashboard-container {
+    height: 512px;
+    margin-right: 10px;
+    margin-top: 50px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+
+    .column {
+        display: flex;
+        flex-direction: column;
+
+        height: 100%;
+        width: 750px;
+        margin-right: 14px;
+        margin-left: 25px;
+
+        .user-container {
+            height: 84px;
+            margin-bottom: 30px;
+            padding: 0;
+
+
+            display: flex;
+            justify-content: start;
+            align-items: center;
+
+            font-size: 36px;
+            font-weight: lighter;
+            color: #1B263B;
+
+            .square {
+                width: 25px;
+                height: 100%;
+                background-color: #415A77;
+                margin-right: 15px;
+            }
+
+            p {
+                margin-top: 10px;
+            }
+
+        }
+
+        .schedules-container {
+            height: 354px;
+
+            h5 {
+                padding: 10px;
+                font-size: 20px;
+            }
+
+            .schedules {
+                padding: 10px !important;
+            }
+        }
+    }
+
+    .schedules-day-container {
+        margin-left: 15px;
+        height: 100%;
+        width: 750px;
+    }
+}

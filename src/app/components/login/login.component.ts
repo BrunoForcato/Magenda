@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LoginModel } from '../../models/loginModel';
+import { UserModel } from '../../models/userModel';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
@@ -32,7 +32,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    var loginFormValue = this.loginForm.getRawValue() as LoginModel
+    var loginFormValue = this.loginForm.getRawValue() as UserModel;
+    loginFormValue.name = 'Bruno';
     this.localStorageService.setItem('user', JSON.stringify(loginFormValue));
 
     this.router.navigate(['home']);

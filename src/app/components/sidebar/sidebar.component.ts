@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
 export class SidebarComponent {
   routes = [
     {
-      title: "Home",
+      title: "Dashboard",
       active: true
     },
     {
