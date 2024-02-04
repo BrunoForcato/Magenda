@@ -1,20 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginModel } from '../../models/loginModel';
+import { UserModel } from '../../models/userModel';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, NavbarComponent, SidebarComponent],
+  imports: [CommonModule, NavbarComponent, SidebarComponent, DashboardComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
-  user?: LoginModel;
+  user?: UserModel;
 
   constructor(private localStorageService: LocalStorageService, private router: Router) { }
 
