@@ -1,4 +1,46 @@
 <div class="calendar-container">
     <h1>Agenda</h1>
-    <div class="calendar"></div>
+    <div class="calendar container-box">
+        <full-calendar class="full-calendar" [options]="calendarOptions" (dateClick)="handleDateClick($event)"
+            (eventClick)="handleEventClick($event)"></full-calendar>
+    </div>
+</div>
+
+<div class="modal show" tabindex="-1" role="dialog" id="modalTeste"
+    [ngStyle]="{'display': this.showModal ? 'block' : 'none'}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Criar Agendamento</h5>
+                <button type="button" class="close" (click)="closeModal()" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" [formGroup]="scheduleForm" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <label for="title">Titulo do Agendamento</label>
+                        <input type="text" [(ngModel)]="scheduleModel.title" [ngModelOptions]="{standalone: true}"
+                            class="form-control" id="title" placeholder="Digite o Titulo do Agendamento">
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Data do Agendamento</label>
+                        <input type="datetime" [(ngModel)]="scheduleModel.date" [ngModelOptions]="{standalone: true}"
+                            class="
+                            form-control" id="date" placeholder="00/00/0000" mask="d0/M0/0000 Hh:m0:s0">
+                    </div>
+                    <div class="form-group">
+                        <label for="observation">Observação</label>
+                        <input type="textarea" [(ngModel)]="scheduleModel.observation"
+                            [ngModelOptions]="{standalone: true}" class="form-control" id="observation">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-close-modal" (click)="closeModal()"
+                    data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-save" (click)="onSubmit()">Salvar Agendamento</button>
+            </div>
+        </div>
+    </div>
 </div>

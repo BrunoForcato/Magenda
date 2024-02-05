@@ -1,11 +1,42 @@
 .calendar-container {
-    height: 512px;
-    margin-right: 10px;
-    margin-top: 50px;
-    border: 1px solid #000;
+    height: 752px;
+    margin: 50px 25px 0px 25px;
 
     display: flex;
-    flex-direction: row;
-    justify-content: start;
+    flex-direction: column;
+    justify-content: center;
     align-items: start;
+
+    .calendar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-right: 10px;
+        background-color: #fff;
+
+        .full-calendar {
+            width: 100%;
+            padding: 20px
+        }
+    }
+}
+
+.modal-body {
+    .form-group {
+        margin-bottom: 10px;
+    }
+}
+
+.modal-footer {
+
+    .btn-save {
+        background-color: #415A77 !important;
+        color: #E0E1DD;
+    }
+
+    .btn-close-modal {
+        background-color: #E0E1DD !important;
+        color: #415A77;
+    }
 }

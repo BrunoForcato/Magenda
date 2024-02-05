@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder, ReactiveFormsModule, Validators } from '@angula
 import { UserModel } from '../../models/userModel';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { NavbarComponent } from '../navbar/navbar.component';
 import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
