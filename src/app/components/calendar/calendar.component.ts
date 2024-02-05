@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import { CalendarOptions } from '@fullcalendar/core';
+import { CalendarOptions, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import ptLocale from '@fullcalendar/core/locales/pt';
 import interactionPlugin from '@fullcalendar/interaction'
@@ -8,6 +8,11 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { NgxMaskDirective } from 'ngx-mask';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ScheduleModel } from '../../models/scheduleModel';
+import { Observable, Subscription, map } from 'rxjs';
+import { ScheduleService } from '../../services/schedule.service';
+import { response } from 'express';
+import { ActiveRouteService } from '../../services/active-routes.service';
+
 
 @Component({
   selector: 'app-calendar',
@@ -18,13 +23,17 @@ import { ScheduleModel } from '../../models/scheduleModel';
 })
 export class CalendarComponent implements OnInit {
   public showModal: boolean = false;
+  public submitButtonText: string = 'Salvar Agendamento';
+
   scheduleForm!: FormGroup;
   scheduleModel: ScheduleModel = new ScheduleModel;
+  events$!: Observable<ScheduleModel[]>;
 
-  constructor(private formBuilder: FormBuilder, private datePipe: DatePipe) { }
+  constructor(private formBuilder: FormBuilder, private datePipe: DatePipe, private scheduleService: ScheduleService) { }
 
   ngOnInit(): void {
     this.createScheduleForm()
+    this.getAllEvents()
   }
 
   calendarOptions: CalendarOptions = {
@@ -33,6 +42,7 @@ export class CalendarComponent implements OnInit {
       center: 'title',
       right: 'dayGridMonth,dayGridWeek,dayGridDay' // user can switch between the two
     },
+    displayEventTime: false,
     locale: ptLocale,
     height: 750,
     initialView: 'dayGridMonth',
@@ -40,27 +50,26 @@ export class CalendarComponent implements OnInit {
     plugins: [dayGridPlugin, interactionPlugin],
     dateClick: this.handleDateClick.bind(this),
     eventClick: this.handleEventClick.bind(this),
-    events: [
-      { title: 'event 1', date: '2024-02-01', observation: 'teste' },
-      { title: 'event 1', date: '2024-02-02', observation: 'teste23' },
-    ]
+    events: []
 
   };
 
   handleDateClick(event: any) {
     this.showModal = true;
     const formatedDate = this.datePipe.transform(event.date, 'dd/MM/yyyy HH:mm') || '';
-    this.scheduleModel.date = formatedDate
+    this.scheduleModel.scheduleDate = formatedDate
     this.scheduleForm.value.date = formatedDate;
+    this.submitButtonText = 'Salvar Agendamento'
   }
 
   handleEventClick(info: any) {
     this.showModal = true;
-    console.log(info.event)
     const formatedDate = this.datePipe.transform(info.event.start, 'dd/MM/yyyy HH:mm') || '';
-    this.scheduleModel.date = formatedDate
+    this.scheduleModel.scheduleDate = formatedDate
     this.scheduleModel.title = info.event.title
     this.scheduleModel.observation = info.event.extendedProps.observation
+    this.scheduleModel.id = info.event.id
+    this.submitButtonText = 'Atualizar Agendamento'
   }
 
   closeModal() {
@@ -76,8 +85,29 @@ export class CalendarComponent implements OnInit {
     })
   }
 
-  onSubmit() {
+  async onSubmit() {
     var scheduleFormValue = this.scheduleModel as ScheduleModel;
-    console.log(scheduleFormValue)
+    scheduleFormValue.scheduleDate = this.datePipe.transform(scheduleFormValue.scheduleDate, "yyyy-dd-MM") || '';
+
+    if (this.submitButtonText == 'Atualizar Agendamento') {
+      await this.scheduleService.UpdateSchedule(scheduleFormValue);
+    } else {
+      await this.scheduleService.AddNewSchedule(scheduleFormValue);
+    }
+
+    this.getAllEvents();
+    this.closeModal()
+  }
+
+  async getAllEvents(): Promise<any> {
+    this.events$ = await this.scheduleService.GetAllSchedules()
+    this.events$.subscribe(results => {
+      const newEvents: EventInput[] = []
+      results.map(result => {
+        let event: EventInput = { id: result.id?.toString(), title: result.title, date: result.scheduleDate, observation: result.observation }
+        newEvents.push(event)
+      })
+      this.calendarOptions.events = newEvents
+    })
   }
 }

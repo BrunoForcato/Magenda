@@ -4,6 +4,7 @@ import { UserModel } from '../../models/userModel';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -15,8 +16,10 @@ import { LocalStorageService } from '../../services/local-storage.service';
 
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
+  failedLogin: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private localStorageService: LocalStorageService) { }
+  constructor(private formBuilder: FormBuilder, private router: Router,
+    private localStorageService: LocalStorageService, private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.isAuthenticated();
@@ -32,10 +35,13 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     var loginFormValue = this.loginForm.getRawValue() as UserModel;
-    loginFormValue.name = 'Bruno';
-    this.localStorageService.setItem('user', JSON.stringify(loginFormValue));
-
-    this.router.navigate(['home']);
+    this.loginService.LoginUsuario(loginFormValue).subscribe(
+      token => {
+        this.localStorageService.setItem('token', token)
+        this.localStorageService.setItem('user', JSON.stringify(loginFormValue));
+        this.router.navigate(['home']);
+      }, erro => { this.failedLogin = true }
+    )
   }
 
   forgotPassword() {

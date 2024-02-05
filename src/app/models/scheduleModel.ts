@@ -1,5 +1,6 @@
 export class ScheduleModel {
+    id?: number;
     title!: string;
-    date!: string;
+    scheduleDate!: string;
     observation!: string;
 }

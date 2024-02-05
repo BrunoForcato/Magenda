@@ -35,7 +35,6 @@ export class SidebarComponent {
       }
     })
 
-    console.log(routeName)
     this.activeRouteService.setActiveRoute(routeName);
   }
 }

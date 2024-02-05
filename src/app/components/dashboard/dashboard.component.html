@@ -17,19 +17,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>teste</td>
+                        <tr *ngFor="let schedule of schedules$ | async;">
+                            <th scope="row">{{schedule.id}}</th>
+                            <td>{{schedule.title}}</td>
+                            <td>{{dateFormatter(schedule.scheduleDate)}}</td>
+                            <td>{{schedule.observation}}</td>
                         </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>teste</td>
-                        </tr>
-                        <tr>
                     </tbody>
                 </table>
             </div>

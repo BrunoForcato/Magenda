@@ -20,7 +20,8 @@
             </div>
 
             <div class="input-container">
-                <input class="input password" type="text" placeholder="Senha" name="password" formControlName="password"
+                <input class="input password" type="password" placeholder="Senha" name="password"
+                    formControlName="password"
                     [ngClass]="{ 'error-input': loginForm.get('password')?.invalid && loginForm.get('password')?.touched }">
 
                 <div class=" error"
@@ -30,6 +31,7 @@
             </div>
             <a class="link" routerLink="/building" href="#">Esqueceu sua senha?</a>
             <button class="btn" type="submit" [disabled]="!loginForm.valid">Entrar</button>
+            <span *ngIf="failedLogin" class="error">E-mail ou Senha incorretos</span>
         </div>
     </form>
 </div>
