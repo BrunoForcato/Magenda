@@ -7,7 +7,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { DatePipe } from '@angular/common';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideClientHydration(), provideAnimationsAsync(), provideEnvironmentNgxMask(), DatePipe]
+  providers: [provideRouter(routes), provideClientHydration(), provideAnimationsAsync(), provideEnvironmentNgxMask(), DatePipe, provideHttpClient()]
 };

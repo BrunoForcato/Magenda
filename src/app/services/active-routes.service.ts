@@ -11,7 +11,6 @@ export class ActiveRouteService {
   constructor() { }
 
   setActiveRoute(routeName: string) {
-    console.log(routeName)
     this.activeRouteSubject.next(routeName);
   }
 
