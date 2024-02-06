@@ -11,7 +11,11 @@ export class LoginService {
 
   constructor(private httpClient: HttpClient) { }
 
-  LoginUsuario(userModel: UserModel) {
+  LoginUser(userModel: UserModel) {
     return this.httpClient.post<any>(`${this.baseURL}/CreateToken/`, userModel);
+  }
+
+  CreateUser(userModel: UserModel) {
+    return this.httpClient.post<any>(`${this.baseURL}/AddUser/`, userModel);
   }
 }
