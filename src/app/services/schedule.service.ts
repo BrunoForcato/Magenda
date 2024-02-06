@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserModel } from '../models/userModel';
 import { ScheduleModel } from '../models/scheduleModel';
 import { LocalStorageService } from './local-storage.service';
+import { catchError, map, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,8 @@ export class ScheduleService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     })
-    return this.httpClient.get<any>(`${this.baseURL}/GetAllSchedules/`, { headers: headers });
+
+    return this.httpClient.get<any>(`${this.baseURL}/GetAllSchedules/`, { headers: headers })
   }
 
   async GetTotalSchedules() {
@@ -33,7 +35,7 @@ export class ScheduleService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     })
-    return this.httpClient.get<any>(`${this.baseURL}/GetSchedulesCount/`, { headers: headers });
+    return this.httpClient.get<any>(`${this.baseURL}/GetSchedulesCount/`, { headers: headers })
   }
 
   async AddNewSchedule(scheduleModel: ScheduleModel) {
@@ -71,9 +73,6 @@ export class ScheduleService {
         date: scheduleModel.scheduleDate.toString(),
         observation: scheduleModel.observation
       }
-
-      console.log(newSchedule);
-      return false;
 
       const response = this.httpClient.post<any>(`${this.baseURL}/UpdateSchedule/`, newSchedule, { headers: headers }).subscribe();
       return response

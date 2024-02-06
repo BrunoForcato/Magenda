@@ -3,9 +3,10 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { UserModel } from '../../models/userModel';
 import { CanvasJSChart } from '../../canvasjs.angular.component';
 import { ScheduleService } from '../../services/schedule.service';
-import { BehaviorSubject, Observable, async, count, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ScheduleModel } from '../../models/scheduleModel';
 import { CommonModule, DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -42,7 +43,8 @@ export class DashboardComponent implements OnInit {
     }]
   }
 
-  constructor(private localStorageService: LocalStorageService, private scheduleService: ScheduleService, private datePipe: DatePipe) { }
+  constructor(private localStorageService: LocalStorageService, private scheduleService: ScheduleService,
+    private datePipe: DatePipe, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -61,7 +63,6 @@ export class DashboardComponent implements OnInit {
       this.schedulesTotal$ = await this.scheduleService.GetTotalSchedules()
 
       this.schedulesTotal$.subscribe(total => {
-
         this.chartOptions = {
           animationEnabled: true,
           title: {
@@ -83,7 +84,15 @@ export class DashboardComponent implements OnInit {
             ]
           }]
         };
-      });
+      },
+        async error => {
+          if (error.status == 401) {
+            await this.localStorageService.removeItem('user')
+            await this.localStorageService.removeItem('token')
+            this.router.navigate(['login']);
+          }
+
+        });
     } catch (error) {
       console.log(error);
     }
