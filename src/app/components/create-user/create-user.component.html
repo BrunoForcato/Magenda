@@ -1,0 +1,38 @@
+<div class="login-container">
+    <form action="" class="login-form" [formGroup]="CreateUserForm" (ngSubmit)="onSubmit()">
+        <div class="logo-container">
+            <h1 class="logo">MAGENDA</h1>
+        </div>
+        <div class="form-container">
+            <p class="label">Crie sua Conta</p>
+            <div class="input-container">
+                <input class="input email" type="text" placeholder="Email" name="email" formControlName="email"
+                    [ngClass]="{ 'error-input': CreateUserForm.get('email')?.invalid && CreateUserForm.get('email')?.touched }">
+                <div class="error"
+                    *ngIf="CreateUserForm.get('email')?.invalid && CreateUserForm.get('email')?.errors?.['pattern'] && CreateUserForm.get('email')?.touched">
+                    Campo de email inválido!
+                </div>
+
+                <div class="error"
+                    *ngIf="CreateUserForm.get('email')?.invalid && CreateUserForm.get('email')?.errors?.['required'] && CreateUserForm.get('email')?.touched">
+                    Campo de email precisa ser preenchido!
+                </div>
+            </div>
+
+            <div class="input-container">
+                <input class="input password" type="password" placeholder="Senha" name="password"
+                    formControlName="password"
+                    [ngClass]="{ 'error-input': CreateUserForm.get('password')?.invalid && CreateUserForm.get('password')?.touched }">
+
+                <div class=" error"
+                    *ngIf="CreateUserForm.get('password')?.invalid && CreateUserForm.get('password')?.errors?.['required'] && CreateUserForm.get('password')?.touched">
+                    Campo de senha precisa ser preenchido!
+                </div>
+            </div>
+            <div class="btn-container">
+                <button class="btn" type="submit" [disabled]="!CreateUserForm.valid">Criar</button>
+                <button class="btn" (click)="toLoginPage()" type="button">Voltar</button>
+            </div>
+        </div>
+    </form>
+</div>

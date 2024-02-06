@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     var loginFormValue = this.loginForm.getRawValue() as UserModel;
-    this.loginService.LoginUsuario(loginFormValue).subscribe(
+    this.loginService.LoginUser(loginFormValue).subscribe(
       token => {
         this.localStorageService.setItem('token', token)
         this.localStorageService.setItem('user', JSON.stringify(loginFormValue));
@@ -53,5 +53,9 @@ export class LoginComponent implements OnInit {
     if (userString !== null) {
       this.router.navigate(['home']);
     }
+  }
+
+  toCreateUser() {
+    this.router.navigate(['createUser']);
   }
 }

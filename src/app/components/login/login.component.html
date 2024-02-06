@@ -30,7 +30,10 @@
                 </div>
             </div>
             <a class="link" routerLink="/building" href="#">Esqueceu sua senha?</a>
-            <button class="btn" type="submit" [disabled]="!loginForm.valid">Entrar</button>
+            <div class="btn-container">
+                <button class="btn" type="submit" [disabled]="!loginForm.valid">Entrar</button>
+                <button class="btn" (click)="toCreateUser()" type="button">Criar Conta</button>
+            </div>
             <span *ngIf="failedLogin" class="error">E-mail ou Senha incorretos</span>
         </div>
     </form>
