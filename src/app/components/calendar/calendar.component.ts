@@ -12,6 +12,8 @@ import { Observable, Subscription, map } from 'rxjs';
 import { ScheduleService } from '../../services/schedule.service';
 import { response } from 'express';
 import { ActiveRouteService } from '../../services/active-routes.service';
+import { Router } from '@angular/router';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 
 @Component({
@@ -29,7 +31,8 @@ export class CalendarComponent implements OnInit {
   scheduleModel: ScheduleModel = new ScheduleModel;
   events$!: Observable<ScheduleModel[]>;
 
-  constructor(private formBuilder: FormBuilder, private datePipe: DatePipe, private scheduleService: ScheduleService) { }
+  constructor(private formBuilder: FormBuilder, private datePipe: DatePipe, private scheduleService: ScheduleService,
+    private router: Router, private localStorageService: LocalStorageService) { }
 
   ngOnInit(): void {
     this.createScheduleForm()
@@ -108,6 +111,14 @@ export class CalendarComponent implements OnInit {
         newEvents.push(event)
       })
       this.calendarOptions.events = newEvents
-    })
+    },
+      async error => {
+        if (error.status == 401) {
+          await this.localStorageService.removeItem('user')
+          await this.localStorageService.removeItem('token')
+          this.router.navigate(['login']);
+        }
+
+      })
   }
 }
